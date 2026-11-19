@@ -1,25 +1,26 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" translate="no">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google" content="notranslate">
 <title>Central Isaque</title>
 <meta name="description" content="Central Isaque · Pagamento seguro">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#060708; --card:#0f1114; --card-2:#15181d; --line:#22262d;
+    --bg:#060708; --card-2:#15181d; --line:#22262d;
     --text:#f1f3f6; --muted:#8b93a1; --dim:#5c6370;
     --blue:#2f7bff; --blue-2:#1a5cff; --blue-glow:rgba(47,123,255,.45);
     --green:#22c55e;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
   body{
     background:var(--bg); color:var(--text);
     font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    min-height:100vh; overflow-x:hidden; position:relative; line-height:1.5;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:24px 16px; overflow-x:hidden; position:relative; line-height:1.5;
   }
 
   /* ---------- FUNDO ---------- */
@@ -42,42 +43,36 @@
   canvas#stars{position:absolute;inset:0;width:100%;height:100%}
   .vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.75) 100%)}
 
-  /* ---------- LAYOUT ---------- */
-  .wrap{position:relative;z-index:1;width:100%;max-width:520px;margin:0 auto;padding:28px 16px 40px}
-  header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-  .logo{
-    width:44px;height:44px;border-radius:12px;flex-shrink:0;
-    background:linear-gradient(135deg,var(--blue),#0b2f8a);
-    display:grid;place-items:center;font-weight:800;font-size:17px;letter-spacing:-.02em;
-    box-shadow:0 8px 24px -6px var(--blue-glow);
-  }
-  .brand-name{font-weight:800;font-size:17px;letter-spacing:-.01em}
-  .brand-sub{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-
+  /* ---------- CARD ---------- */
+  .wrap{position:relative;z-index:1;width:100%;max-width:420px}
   .card{
     position:relative;
     background:linear-gradient(180deg,rgba(21,24,29,.88),rgba(12,14,17,.92));
-    border:1px solid var(--line); border-radius:20px; padding:28px 24px;
+    border:1px solid var(--line); border-radius:20px; padding:30px 24px 24px;
     backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
     box-shadow:0 30px 80px -20px rgba(0,0,0,.8);
-    margin-bottom:18px;
+    animation:rise .7s cubic-bezier(.2,.8,.2,1) both;
   }
-  .card.glow::before{
+  .card::before{
     content:"";position:absolute;left:24px;right:24px;top:-1px;height:1px;
     background:linear-gradient(90deg,transparent,var(--blue),transparent);
   }
-  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
-  .reveal.in{opacity:1;transform:none}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .logo{
+    width:44px;height:44px;border-radius:12px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--blue),#0b2f8a);
+    display:grid;place-items:center;font-weight:800;font-size:17px;
+    box-shadow:0 8px 24px -6px var(--blue-glow);
+  }
+  .brand-name{font-weight:800;font-size:17px}
+  .brand-sub{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
 
   .label{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700}
-  .label.blue{color:var(--blue)}
   h1{font-size:21px;font-weight:700;margin:6px 0 4px;line-height:1.3}
-  h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin:8px 0 10px}
-  h2 .hl{background:linear-gradient(90deg,#6aa4ff,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
-  p{color:var(--muted);font-size:14.5px}
-  p + p{margin-top:10px}
-  p strong{color:var(--text);font-weight:600}
+  .desc{color:var(--muted);font-size:14.5px}
 
   .price-box{
     margin:20px 0;padding:16px 18px;border-radius:14px;background:var(--card-2);border:1px solid var(--line);
@@ -89,8 +84,8 @@
 
   .btn{
     position:relative;display:flex;align-items:center;justify-content:center;gap:10px;
-    width:100%;padding:16px;border:0;border-radius:12px;cursor:pointer;
-    font:700 16px 'Inter',sans-serif;color:#fff;text-decoration:none;text-align:center;
+    width:100%;padding:16px;border-radius:12px;
+    font:700 16px 'Inter',sans-serif;color:#fff;text-decoration:none;
     background:linear-gradient(180deg,var(--blue),var(--blue-2));
     box-shadow:0 10px 30px -8px var(--blue-glow),0 1px 0 rgba(255,255,255,.2) inset;
     overflow:hidden;transition:transform .15s,box-shadow .2s;
@@ -103,46 +98,12 @@
   }
   @keyframes shine{0%{left:-60%}60%,100%{left:130%}}
   .btn svg{width:18px;height:18px;flex-shrink:0}
-  .btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:#c4cad4;font-weight:600;font-size:14.5px;padding:13px}
-  .btn.ghost::after{display:none}
-  .btn.ghost:hover{border-color:var(--blue);color:#fff}
 
   .methods{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
   .chip{font-size:12px;color:#c4cad4;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
-  .secure{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-size:12.5px;color:var(--muted);text-align:center}
+  .secure{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);text-align:center}
   .secure svg{width:15px;height:15px;color:var(--green);flex-shrink:0}
-
-  .divider{display:flex;align-items:center;gap:12px;margin:30px 0 18px;color:var(--muted);font-size:13px;font-weight:600;text-align:center}
-  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
-
-  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
-  .pillar{background:var(--card-2);border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center}
-  .pillar .ic{font-size:22px;margin-bottom:6px}
-  .pillar b{display:block;font-size:13.5px}
-  .pillar span{font-size:11.5px;color:var(--muted);line-height:1.35;display:block;margin-top:2px}
-
-  .list{list-style:none;margin:16px 0 4px}
-  .list li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px}
-  .list li:last-child{border-bottom:0}
-  .num{width:26px;height:26px;border-radius:8px;background:rgba(47,123,255,.12);color:#7fb0ff;display:grid;place-items:center;font-size:12.5px;font-weight:700;flex-shrink:0}
-  .list b{display:block;font-weight:600}
-  .list span{color:var(--muted);font-size:13px}
-
-  .offer-price{display:flex;align-items:baseline;gap:10px;justify-content:center;margin:18px 0 6px}
-  .old{color:var(--dim);text-decoration:line-through;font-size:16px}
-  .new{font-size:38px;font-weight:800;letter-spacing:-.02em}
-  .new small{font-size:16px;color:var(--muted);font-weight:600;margin-right:4px}
-  .badge{display:inline-block;font-size:11.5px;font-weight:700;color:#7fb0ff;background:rgba(47,123,255,.12);border:1px solid rgba(47,123,255,.3);padding:4px 10px;border-radius:999px}
-  .center{text-align:center}
-
-  .guarantee{display:flex;gap:14px;align-items:flex-start}
-  .guarantee .shield{width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);display:grid;place-items:center;flex-shrink:0}
-  .guarantee .shield svg{width:22px;height:22px;color:var(--green)}
-
-  .note{font-size:11.5px;color:var(--dim);text-align:center;margin-top:14px;line-height:1.5}
-  .foot{text-align:center;font-size:11.5px;color:var(--dim);margin-top:26px}
-
-  @media (max-width:380px){ .pillars{grid-template-columns:1fr} h2{font-size:22px} }
+  .foot{text-align:center;font-size:11.5px;color:var(--dim);margin-top:18px}
 </style>
 </head>
 <body>
@@ -155,24 +116,22 @@
 </div>
 
 <main class="wrap">
-
-  <header class="reveal">
-    <div class="logo">CI</div>
-    <div>
-      <div class="brand-name">Central Isaque</div>
-      <div class="brand-sub"><span class="dot"></span>Ambiente de pagamento seguro</div>
+  <div class="card">
+    <div class="brand">
+      <div class="logo">CI</div>
+      <div>
+        <div class="brand-name">Central Isaque</div>
+        <div class="brand-sub"><span class="dot"></span>Ambiente de pagamento seguro</div>
+      </div>
     </div>
-  </header>
 
-  <!-- ===== 1. PAGAMENTO DO SERVIÇO ===== -->
-  <section class="card glow reveal">
     <div class="label">Seu orçamento</div>
-    <h1 id="servico">Serviço prestado</h1>
-    <p id="servicoDesc">Obrigado pela confiança! Abaixo está o valor combinado.</p>
+    <h1 id="servico"></h1>
+    <p class="desc" id="servicoDesc"></p>
 
     <div class="price-box">
-      <div class="price"><small>R$</small><span id="valorServico">0,00</span></div>
-      <div class="price-note" id="notaServico">pagamento único</div>
+      <div class="price"><small>R$</small><span id="valorServico"></span></div>
+      <div class="price-note" id="notaServico"></div>
     </div>
 
     <a class="btn" id="btnPagar" href="#" rel="noopener">
@@ -184,69 +143,62 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
       Checkout seguro processado pela Kiwify
     </div>
-  </section>
-
-  <div class="divider reveal">um recado rápido antes de você ir</div>
-
-  <!-- ===== 2. A HISTÓRIA ===== -->
-  <section class="card reveal">
-    <div class="label blue">Bastidores</div>
-    <h2>Esse valor que você está pagando… <span class="hl">eu aprendi a ganhar pela internet.</span></h2>
-    <p>Não teve sorte nem segredo. Comecei do zero, sem saber direito o que estava fazendo, e fui aprendendo na prática até fazer meus <strong id="marcoTexto">primeiros +R$ 1.000</strong> pela internet.</p>
-    <p>O que fez diferença não foi talento. Foram <strong>três coisas que qualquer pessoa pode treinar</strong>:</p>
-
-    <div class="pillars">
-      <div class="pillar"><div class="ic">🎯</div><b>Disciplina</b><span>Fazer mesmo sem vontade</span></div>
-      <div class="pillar"><div class="ic">🔁</div><b>Persistência</b><span>Errar, ajustar e continuar</span></div>
-      <div class="pillar"><div class="ic">📈</div><b>Constância</b><span>Um pouco todo dia</span></div>
-    </div>
-  </section>
-
-  <!-- ===== 3. OFERTA DO CURSO ===== -->
-  <section class="card glow reveal" id="curso">
-    <div class="center"><span class="badge">Condição especial para clientes</span></div>
-    <h2 class="center" style="margin-top:14px">Quer aprender o caminho que <span class="hl">eu fiz?</span></h2>
-    <p class="center">Montei um curso <strong>básico, direto e barato</strong> mostrando passo a passo como eu comecei. Sem enrolação.</p>
-
-    <ul class="list" id="modulos"></ul>
-
-    <div class="offer-price">
-      <span class="old" id="precoAntigo"></span>
-      <span class="new"><small>R$</small><span id="precoCurso">0</span></span>
-    </div>
-    <p class="center" style="font-size:12.5px;margin-bottom:18px" id="notaCurso">pagamento único · acesso imediato</p>
-
-    <a class="btn" id="btnCurso" href="#" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      Quero aprender também
-    </a>
-  </section>
-
-  <!-- ===== 4. GARANTIA ===== -->
-  <section class="card reveal">
-    <div class="guarantee">
-      <div class="shield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
-      <div>
-        <b style="font-size:15px">Garantia de 7 dias no curso</b>
-        <p style="margin-top:4px">Entrou e achou que não é pra você? É só pedir o reembolso dentro de 7 dias pela própria Kiwify.</p>
-      </div>
-    </div>
-  </section>
-
-  <a class="btn ghost reveal" href="#" id="voltarPagar">Pagar só o orçamento</a>
-
-  <p class="note">Os resultados citados são da minha experiência pessoal e não são promessa de ganho. O resultado de cada pessoa depende de dedicação, disciplina e constância.</p>
+  </div>
   <p class="foot" id="foot"></p>
 </main>
 
 <script>
   /* =========================================================
-     ⚙️  CONFIGURAÇÃO — TROQUE SÓ ESTES VALORES
+     CONFIGURACAO - TROQUE SO ESTES 4 VALORES A CADA CLIENTE
+     (mantenha as aspas " " e a virgula no final da linha)
      ========================================================= */
   const CONFIG = {
-    // --- ORÇAMENTO DO CLIENTE (muda a cada cliente) ---
-    servico:        "Especialista em Páginas de Vendas",             // ex: "Criação de loja TikTok Shop"
-    servicoDesc:    "Obrigado pela confiança! Abaixo está o valor combinado.",
-    valorServico:   "63,33",                       // mesmo valor do produto na Kiwify
-    notaServico:    "pagamento único",
-    linkPagamento:  "https://pay.kiwify.com.br/JL11M4R",
+    servico:       "Especialista em Páginas de Vendas",
+    servicoDesc:   "Obrigado pela confiança! Abaixo está o valor combinado.",
+    valorServico:  "63,33",
+    linkPagamento: "https://pay.kiwify.com.br/JL11M4R",
+    notaServico:   "pagamento único"
+  };
+
+  /* ---------- nao precisa mexer daqui para baixo ---------- */
+  const $ = id => document.getElementById(id);
+  $('servico').textContent = CONFIG.servico;
+  $('servicoDesc').textContent = CONFIG.servicoDesc;
+  $('valorServico').textContent = CONFIG.valorServico;
+  $('notaServico').textContent = CONFIG.notaServico;
+  $('foot').textContent = '© ' + new Date().getFullYear() + ' Central Isaque · Todos os direitos reservados';
+
+  // repassa utm_* da URL para o checkout (rastreio)
+  try{
+    const u = new URL(CONFIG.linkPagamento);
+    new URLSearchParams(location.search).forEach((v,k)=>{ if(k.startsWith('utm_') || k==='src' || k==='sck') u.searchParams.set(k,v); });
+    $('btnPagar').href = u.toString();
+  }catch(e){ $('btnPagar').href = CONFIG.linkPagamento; }
+
+  // particulas
+  const c = $('stars'), ctx = c.getContext('2d');
+  let W, H, pts = [];
+  function resize(){
+    const dpr = window.devicePixelRatio || 1;
+    W = c.width = innerWidth * dpr; H = c.height = innerHeight * dpr;
+    const n = Math.min(90, Math.floor(innerWidth * innerHeight / 14000));
+    pts = Array.from({length:n}, () => ({
+      x:Math.random()*W, y:Math.random()*H, r:(Math.random()*1.4+.4)*dpr,
+      vx:(Math.random()-.5)*.15*dpr, vy:(Math.random()-.5)*.15*dpr, blue:Math.random()<.45
+    }));
+  }
+  addEventListener('resize', resize); resize();
+  (function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of pts){
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = p.blue ? 'rgba(80,140,255,.7)' : 'rgba(170,178,190,.35)';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  })();
+</script>
+</body>
+</html>
